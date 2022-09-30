@@ -120,7 +120,7 @@ const renderTodos = (page = 1) => {
   });
   document.querySelector(".id-reverse").addEventListener("click", () => {
     // id tıklandığında sıralama yapılacak.
-    todos.sort((a, b) => a.id - b.id);
+    todos.sort((a, b) => b.id - a.id);
 
     // sıralama yapılacak tekrar o sayfada render edilecek.
     renderTodos(current_page);
