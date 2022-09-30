@@ -27,7 +27,7 @@ const renderTodos = (page = 1) => {
       <th scope="col" id="id-sorting">id<button class="id-reverse">&darr;</button></th>
       <th scope="col" id="title-sorting">Başlık <button >&darr;</button></th>
       <th scope="col" id="userid-sorting">Kullanıcı Id</th>
-      <th scope="col">Durum</th>
+      <th scope="col" id="status-sorting">Durum</th>
       <th scope="col"></th>
     </tr>
   `;
@@ -126,17 +126,34 @@ const renderTodos = (page = 1) => {
     renderTodos(current_page);
   });
 
+  // durum sıralaması ("durum" başlığına tıklayınca)
+  document.querySelector("#status-sorting").addEventListener("click", () => {
+    todos.sort((a, b) => {
+      const nameA = a.completed;
+      const nameB = b.completed;
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+    renderTodos(current_page);
+  });
+
   document.querySelector("#userid-sorting").addEventListener("click", () => {
     // userid tıklandığında sıralama yapılacak.
     todos.sort((a, b) => a.userId - b.userId);
     renderTodos(current_page);
   });
 
+  // pagination (sayfalama) işlemi
+
   document.querySelectorAll(".page-link").forEach((btn) => {
-    // pagination butonları içinde döndürülerek, her elemente click eklendi, tıklandığında kaçıncı sayfadaysa oraya göre render edilecek.
     btn.addEventListener("click", () => {
       let data_id = btn.getAttribute("data-id");
-      // kaçıncı buton olduğu attribute olarak alında.
+      // kaçıncı buton olduğu attribute olarak atandı.
       current_page = Number(data_id);
       renderTodos(current_page);
     });
